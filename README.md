@@ -2,6 +2,11 @@
 
 ## a. Project Title & Description
 
+Name: Nur Fadhilah binti Arifin
+Student ID: 2024438458
+Class: D1CDIM2624A
+Subject: IMS566
+
 **RozeeStore Admin Panel** is a modern, responsive, and feature-rich administrative dashboard designed for managing an e-commerce platform. It provides a clean and intuitive interface for tracking sales, managing users, viewing analytics, and handling customer communications. The application is built with a focus on user experience, featuring a persistent dark mode, card-based layouts, and interactive data visualizations to make data management efficient and enjoyable.
 
 ---
