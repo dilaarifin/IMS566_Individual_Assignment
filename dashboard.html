@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <title>RozeeStore</title>
+</head>
+
+<body>
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside>
+        <div class="toggle">
+            <div class="logo">
+                <a href="dashboard.html" class="logo">
+                    <img src="images/logo.png" alt="Roze Logo">
+                    <h2>Roze<span class="danger">eStore</span></h2>
+                </a>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <a href="dashboard.html" class="active"><span class="material-icons-sharp">dashboard</span><h3>Dashboard</h3></a>
+            <a href="users.html"><span class="material-icons-sharp">person_outline</span><h3>Users</h3></a>
+            <a href="#"><span class="material-icons-sharp">receipt_long</span><h3>History</h3></a>
+            <a href="analysis.html"><span class="material-icons-sharp">insights</span><h3>Analytics</h3></a>
+            <a href="messages.html">
+                <span class="material-icons-sharp">mail_outline</span>
+                <h3>Message</h3>
+                <span class="message-count">27</span>
+            </a>
+            <a href="sales_list.html"><span class="material-icons-sharp">inventory</span><h3>Sale List</h3></a>
+            <a href="#"><span class="material-icons-sharp">report_gmailerrorred</span><h3>Reports</h3></a>
+            <a href="#"><span class="material-icons-sharp">settings</span><h3>Settings</h3></a>
+            <a href="#"><span class="material-icons-sharp">add</span><h3>New Login</h3></a>
+            <a href="signout_auth.php"><span class="material-icons-sharp">logout</span><h3>Logout</h3></a>
+        </div>
+    </aside>
+    <!-- END Sidebar -->
+
+    <!-- Main Dashboard Content -->
+    <main>
+        <h1>Dashboard</h1>
+
+        <div class="analyze">
+
+        <!-- TOTAL SALES -->
+            <div class="sales">
+                <div class="info">
+                    <h3>Total Sales</h3>
+                    <h1>RM 124,580</h1>
+                    <small class="text-muted">Last 30 days</small>
+                </div>
+                <div class="progress">
+                    <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                    <div class="percentage"><p>+18%</p></div>
+                </div>
+            </div>
+
+        <!-- TOTAL ORDERS -->
+            <div class="visits">
+                <div class="info">
+                    <h3>Total Orders</h3>
+                    <h1>2,431</h1>
+                    <small class="text-muted">Completed this month</small>
+                </div>
+                <div class="progress">
+                    <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                    <div class="percentage"><p>+9%</p></div>
+                </div>
+            </div>
+
+    <!-- CUSTOMER GROWTH -->
+    <div class="searches">
+        <div class="info">
+            <h3>New Customers</h3>
+            <h1>389</h1>
+            <small class="text-muted">New sign-ups</small>
+        </div>
+        <div class="progress">
+            <svg><circle cx="38" cy="38" r="36"></circle></svg>
+            <div class="percentage"><p>+5%</p></div>
+        </div>
+    </div>
+
+</div>
+
+        <!-- CHARTS COLUMN -->
+        <div class="charts-column" style="display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem;">
+
+            <!-- TOP: Chart.js -->
+            <div class="chart-card" style="background: var(--color-white); padding: 2rem; border-radius: 1.4rem;">
+                <h2>Sales Chart</h2>
+                <canvas id="salesChart"></canvas>
+            </div>
+
+            <!-- BOTTOM: ApexCharts -->
+            <div class="chart-card" style="background: var(--color-white); padding: 2rem; border-radius: 1.4rem;">
+                <h2>Revenue Overview</h2>
+                <div id="revenueChart"></div>
+            </div>
+
+        </div>
+
+        <!-- Middle Section -->
+        <div class="new-users">
+            <h2>Quick Actions</h2>
+            <div class="user-list">
+                <div class="user">
+                    <img src="images/plus.png" alt="">
+                    <h2>Add Product</h2>
+                    <p>Click to add</p>
+                </div>
+
+                <div class="user">
+                    <img src="images/order.png" alt="">
+                    <h2>Orders</h2>
+                    <p>View Orders</p>
+                </div>
+
+                <div class="user">
+                    <img src="images/customer.png" alt="">
+                    <h2>Customers</h2>
+                    <p>Manage Users</p>
+                </div>
+
+                <div class="user">
+                    <img src="images/report.png" alt="">
+                    <h2>Reports</h2>
+                    <p>View Stats</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Right Panel -->
+    <div class="right-section">
+
+        <div class="nav">
+            <button id="menu-btn"><span class="material-icons-sharp">menu</span></button>
+
+            <div class="dark-mode">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
+            </div>
+
+            <div class="profile">
+                <div class="info">
+                    <p>Hello, <b>Admin</b></p>
+                    <small class="text-muted">Admin</small>
+                </div>
+                <div class="profile-photo">
+                    <img src="images/admin.JPG" alt="">
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="user-profile">
+            <div class="logo">
+                <img src="images/logo.png" alt="logo">
+                <h2>RozeeStore</h2>
+                <p>Your Business Dashboard</p>
+            </div>
+        </div>
+
+        <!-- Reminders -->
+        <div class="reminders">
+            <div class="header">
+                <h2>Reminders</h2>
+                <span class="material-icons-sharp">notifications_none</span>
+            </div>
+
+            <div class="notification">
+                <div class="icon"><span class="material-icons-sharp">volume_up</span></div>
+                <div class="content">
+                    <div class="info">
+                        <h3>Inventory Check</h3>
+                        <small class="text-muted">Today at 5 PM</small>
+                    </div>
+                    <span class="material-icons-sharp">more_vert</span>
+                </div>
+            </div>
+
+            <div class="notification deactivate">
+                <div class="icon"><span class="material-icons-sharp">edit</span></div>
+                <div class="content">
+                    <div class="info">
+                        <h3>Update Product</h3>
+                        <small class="text-muted">Tomorrow at 9 AM</small>
+                    </div>
+                    <span class="material-icons-sharp">more_vert</span>
+                </div>
+            </div>
+
+            <div class="notification add-reminder">
+                <div class="add-icon">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Add Reminder</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- index script -->
+    <script>
+        const sideMenu = document.querySelector('aside');
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const darkMode = document.querySelector('.dark-mode');
+
+        menuBtn.addEventListener('click', () => {
+            sideMenu.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', () => {
+        sideMenu.style.display = 'none';
+        });
+
+        darkMode.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode-variables');
+        darkMode.querySelector('span:nth-child(1)').classList.toggle('active');
+        darkMode.querySelector('span:nth-child(2)').classList.toggle('active');
+        
+        // Update charts when dark mode is toggled
+        updateChartTheme();
+        updateApexChartTheme();
+        })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Get the chart context
+const ctx = document.getElementById('salesChart').getContext('2d');
+
+// Function to get chart colors based on current theme
+function getChartColors() {
+    const isDarkMode = document.body.classList.contains('dark-mode-variables');
+    
+    if (isDarkMode) {
+        return {
+            textColor: '#edeffd',
+            gridColor: 'rgba(255, 255, 255, 0.1)',
+            backgroundColor: 'rgba(108, 155, 207, 0.2)',
+            borderColor: '#6C9BCF'
+        };
+    } else {
+        return {
+            textColor: '#363949',
+            gridColor: 'rgba(0, 0, 0, 0.1)',
+            backgroundColor: 'rgba(108, 155, 207, 0.2)',
+            borderColor: '#6C9BCF'
+        };
+    }
+}
+
+// Create initial chart
+let salesChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Monthly Sales (RM)',
+            data: [1200, 1900, 3000, 2500, 3200, 4100],
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true,
+            backgroundColor: getChartColors().backgroundColor,
+            borderColor: getChartColors().borderColor
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { 
+                display: true,
+                labels: {
+                    color: getChartColors().textColor
+                }
+            }
+        },
+        scales: {
+            y: {
+                ticks: {
+                    color: getChartColors().textColor
+                },
+                grid: {
+                    color: getChartColors().gridColor
+                }
+            },
+            x: {
+                ticks: {
+                    color: getChartColors().textColor
+                },
+                grid: {
+                    color: getChartColors().gridColor
+                }
+            }
+        }
+    }
+});
+
+// Function to update chart theme
+function updateChartTheme() {
+    const colors = getChartColors();
+    
+    salesChart.options.plugins.legend.labels.color = colors.textColor;
+    salesChart.options.scales.y.ticks.color = colors.textColor;
+    salesChart.options.scales.y.grid.color = colors.gridColor;
+    salesChart.options.scales.x.ticks.color = colors.textColor;
+    salesChart.options.scales.x.grid.color = colors.gridColor;
+    salesChart.data.datasets[0].backgroundColor = colors.backgroundColor;
+    salesChart.data.datasets[0].borderColor = colors.borderColor;
+    
+    salesChart.update();
+}
+</script>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+// ApexCharts with dark mode support
+let revenueChart;
+
+function getApexChartOptions() {
+    const isDarkMode = document.body.classList.contains('dark-mode-variables');
+    
+    return {
+        chart: {
+            type: 'area',
+            height: 300,
+            toolbar: { show: false },
+            background: 'transparent'
+        },
+        series: [{
+            name: 'Revenue',
+            data: [10, 25, 15, 40, 30, 55, 61]
+        }],
+        xaxis: {
+            categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            labels: {
+                style: {
+                    colors: isDarkMode ? '#edeffd' : '#363949'
+                }
+            }
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    colors: isDarkMode ? '#edeffd' : '#363949'
+                }
+            }
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        dataLabels: { enabled: false },
+        fill: {
+            type: 'gradient',
+            gradient: { 
+                opacityFrom: 0.6, 
+                opacityTo: 0.2,
+                shadeIntensity: 1,
+                stops: [0, 100]
+            }
+        },
+        theme: {
+            mode: isDarkMode ? 'dark' : 'light'
+        },
+        grid: {
+            borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+        },
+        colors: ['#6C9BCF']
+    };
+}
+
+// Initialize the chart
+revenueChart = new ApexCharts(document.querySelector("#revenueChart"), getApexChartOptions());
+revenueChart.render();
+
+// Function to update ApexChart theme
+function updateApexChartTheme() {
+    revenueChart.updateOptions(getApexChartOptions());
+}
+</script>
+
+</html>

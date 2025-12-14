@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <title>RozeeStore - Messages</title>
+</head>
+<body>
+
+    <style>
+        /* Message Page Styles */
+.message-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    height: calc(100vh - 180px);
+}
+
+/* Message List */
+.message-list {
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.message-list-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-light);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-1);
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+}
+
+.search-box input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+    color: var(--color-dark);
+}
+
+.compose-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.compose-btn:hover {
+    background-color: #5a78c2;
+}
+
+.message-filters {
+    display: flex;
+    padding: 0 1.5rem;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    color: var(--color-info-dark);
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.conversations {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.conversation-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.conversation-item:hover {
+    background-color: var(--color-light);
+}
+
+.conversation-item.unread {
+    background-color: rgba(108, 155, 207, 0.05);
+}
+
+.conversation-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.conversation-info {
+    flex: 1;
+}
+
+.conversation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+
+.conversation-header h4 {
+    font-size: 0.95rem;
+    color: var(--color-dark);
+}
+
+.conversation-time {
+    font-size: 0.75rem;
+    color: var(--color-info-dark);
+}
+
+.conversation-preview {
+    font-size: 0.85rem;
+    color: var(--color-dark-variant);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.conversation-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.starred-icon {
+    color: var(--color-warning);
+    font-size: 1.2rem;
+}
+
+.unread-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+}
+
+.no-messages {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-info-dark);
+}
+
+/* Message View */
+.message-view {
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-info-dark);
+}
+
+.empty-state .material-icons-sharp {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.message-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-sender {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.message-sender img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.message-sender h3 {
+    font-size: 1rem;
+    color: var(--color-dark);
+}
+
+.message-sender p {
+    font-size: 0.8rem;
+    color: var(--color-info-dark);
+}
+
+.message-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    color: var(--color-info-dark);
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background-color: var(--color-light);
+    color: var(--color-primary);
+}
+
+.message-content {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 1rem;
+    border-radius: var(--border-radius-2);
+    margin-bottom: 1rem;
+}
+
+.message-bubble.received {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+}
+
+.message-bubble.sent {
+    background-color: var(--color-primary);
+    color: white;
+    align-self: flex-end;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    color: var(--color-info-dark);
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.message-reply {
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-light);
+}
+
+.reply-input {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.reply-input input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-2);
+    outline: none;
+}
+
+.reply-input button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reply-input button:hover {
+    background-color: #5a78c2;
+}
+
+/* Compose Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-light);
+}
+
+.modal-header h3 {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-info-dark);
+    padding: 0.5rem;
+    border-radius: var(--border-radius-1);
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    background-color: var(--color-light);
+    color: var(--color-danger);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    padding: 0 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-dark);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0 1.5rem 1.5rem;
+}
+
+.btn-cancel {
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--color-light);
+    background: none;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    color: var(--color-dark);
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: var(--color-light);
+}
+
+.btn-send {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-send:hover {
+    background-color: #5a78c2;
+}
+
+/* Quick Stats */
+.quick-stats {
+    margin-top: 2rem;
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.quick-stats h2 {
+    margin-bottom: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-light);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-light);
+}
+
+.stat-icon .material-icons-sharp {
+    color: var(--color-primary);
+}
+
+.stat-info h3 {
+    font-size: 0.9rem;
+    color: var(--color-dark-variant);
+    margin-bottom: 0.2rem;
+}
+
+.stat-info p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1024px) {
+    .message-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .message-list {
+        height: 400px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .message-view {
+        height: 500px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .message-list {
+        height: 300px;
+    }
+    
+    .message-view {
+        height: 400px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+}
+
+/* Message Page Styles */
+.message-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    height: calc(100vh - 180px);
+}
+
+/* Message List */
+.message-list {
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.message-list-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-light);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-1);
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+}
+
+.search-box input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+    color: var(--color-dark);
+}
+
+.compose-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.compose-btn:hover {
+    background-color: #5a78c2;
+}
+
+.message-filters {
+    display: flex;
+    padding: 0 1.5rem;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    color: var(--color-info-dark);
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.conversations {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.conversation-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.conversation-item:hover {
+    background-color: var(--color-light);
+}
+
+.conversation-item.unread {
+    background-color: rgba(108, 155, 207, 0.05);
+}
+
+.conversation-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.conversation-info {
+    flex: 1;
+}
+
+.conversation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+
+.conversation-header h4 {
+    font-size: 0.95rem;
+    color: var(--color-dark);
+}
+
+.conversation-time {
+    font-size: 0.75rem;
+    color: var(--color-info-dark);
+}
+
+.conversation-preview {
+    font-size: 0.85rem;
+    color: var(--color-dark-variant);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.conversation-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.starred-icon {
+    color: var(--color-warning);
+    font-size: 1.2rem;
+}
+
+.unread-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+}
+
+.no-messages {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-info-dark);
+}
+
+/* Message View */
+.message-view {
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-info-dark);
+}
+
+.empty-state .material-icons-sharp {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.message-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-sender {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.message-sender img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.message-sender h3 {
+    font-size: 1rem;
+    color: var(--color-dark);
+}
+
+.message-sender p {
+    font-size: 0.8rem;
+    color: var(--color-info-dark);
+}
+
+.message-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    color: var(--color-info-dark);
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background-color: var(--color-light);
+    color: var(--color-primary);
+}
+
+.message-content {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 1rem;
+    border-radius: var(--border-radius-2);
+    margin-bottom: 1rem;
+}
+
+.message-bubble.received {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+}
+
+.message-bubble.sent {
+    background-color: var(--color-primary);
+    color: white;
+    align-self: flex-end;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    color: var(--color-info-dark);
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.message-reply {
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-light);
+}
+
+.reply-input {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.reply-input input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-2);
+    outline: none;
+}
+
+.reply-input button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reply-input button:hover {
+    background-color: #5a78c2;
+}
+
+/* Compose Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-light);
+}
+
+.modal-header h3 {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-info-dark);
+    padding: 0.5rem;
+    border-radius: var(--border-radius-1);
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    background-color: var(--color-light);
+    color: var(--color-danger);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    padding: 0 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-dark);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0 1.5rem 1.5rem;
+}
+
+.btn-cancel {
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--color-light);
+    background: none;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    color: var(--color-dark);
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: var(--color-light);
+}
+
+.btn-send {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-send:hover {
+    background-color: #5a78c2;
+}
+
+/* Quick Stats */
+.quick-stats {
+    margin-top: 2rem;
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.quick-stats h2 {
+    margin-bottom: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-light);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-light);
+}
+
+.stat-icon .material-icons-sharp {
+    color: var(--color-primary);
+}
+
+.stat-info h3 {
+    font-size: 0.9rem;
+    color: var(--color-dark-variant);
+    margin-bottom: 0.2rem;
+}
+
+.stat-info p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-dark);
+}
+    </style>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside>
+        <div class="toggle">
+            <div class="logo">
+                <a href="dashboard.html" class="logo">
+                    <img src="images/logo.png" alt="Roze Logo">
+                    <h2>Roze<span class="danger">eStore</span></h2>
+                </a>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <a href="dashboard.html"><span class="material-icons-sharp">dashboard</span><h3>Dashboard</h3></a>
+            <a href="users.html"><span class="material-icons-sharp">person_outline</span><h3>Users</h3></a>
+            <a href="#"><span class="material-icons-sharp">receipt_long</span><h3>History</h3></a>
+            <a href="index.html"><span class="material-icons-sharp">insights</span><h3>Analytics</h3></a>
+            <a href="messages.html" class="active">
+                <span class="material-icons-sharp">mail_outline</span>
+                <h3>Message</h3>
+                <span class="message-count" id="unread-count">5</span>
+            </a>
+            <a href="sales_list.html"><span class="material-icons-sharp">inventory</span><h3>Sale List</h3></a>
+            <a href="#"><span class="material-icons-sharp">report_gmailerrorred</span><h3>Reports</h3></a>
+            <a href="#"><span class="material-icons-sharp">settings</span><h3>Settings</h3></a>
+            <a href="#"><span class="material-icons-sharp">add</span><h3>New Login</h3></a>
+            <a href="signout_auth.php"><span class="material-icons-sharp">logout</span><h3>Logout</h3></a>
+        </div>
+    </aside>
+    <!-- END Sidebar -->
+
+    <!-- Main Content -->
+    <main>
+        <h1>Messages</h1>
+
+        <div class="message-container">
+            <!-- Message List -->
+            <div class="message-list">
+                <div class="message-list-header">
+                    <div class="search-box">
+                        <span class="material-icons-sharp">search</span>
+                        <input type="text" placeholder="Search messages..." id="search-input">
+                    </div>
+                    <button class="compose-btn" id="compose-btn">
+                        <span class="material-icons-sharp">edit</span>
+                        Compose
+                    </button>
+                </div>
+
+                <div class="message-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="unread">Unread</button>
+                    <button class="filter-btn" data-filter="starred">Starred</button>
+                </div>
+
+                <div class="conversations" id="conversations-list">
+                    <!-- Conversations will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Message View -->
+            <div class="message-view" id="message-view">
+                <div class="empty-state">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>Select a conversation</h3>
+                    <p>Choose a message from the list to start reading</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compose Modal -->
+        <div class="modal" id="compose-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>New Message</h3>
+                    <button class="close-modal" id="close-compose">
+                        <span class="material-icons-sharp">close</span>
+                    </button>
+                </div>
+                <form id="compose-form">
+                    <div class="form-group">
+                        <label for="recipient">To:</label>
+                        <input type="text" id="recipient" placeholder="Enter recipient email or username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" placeholder="Enter subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" rows="8" placeholder="Type your message here..." required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" id="cancel-compose">Cancel</button>
+                        <button type="submit" class="btn-send">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Right Section -->
+    <div class="right-section">
+        <!-- Top Nav -->
+        <div class="nav">
+            <button id="menu-btn"><span class="material-icons-sharp">menu</span></button>
+            <div class="dark-mode">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
+            </div>
+            <div class="profile">
+                <div class="info">
+                    <p>Hello, <b>Admin</b></p>
+                    <small class="text-muted">Admin</small>
+                </div>
+                <div class="profile-photo">
+                    <img src="images/profile-1.png" alt="Admin Profile">
+                </div>
+            </div>
+        </div>
+        <!-- End Top Nav -->
+
+        <!-- User Profile -->
+        <div class="user-profile">
+            <div class="logo">
+                <img src="images/logo.png" alt="Roze Logo">
+                <h2>Roze<span class="danger">eStore</span></h2>
+                <p>Online Shopping Platform</p>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <h2>Message Stats</h2>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <span class="material-icons-sharp">mail</span>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Messages</h3>
+                    <p>127</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <span class="material-icons-sharp">mark_email_unread</span>
+                </div>
+                <div class="stat-info">
+                    <h3>Unread</h3>
+                    <p>5</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <span class="material-icons-sharp">star</span>
+                </div>
+                <div class="stat-info">
+                    <h3>Starred</h3>
+                    <p>12</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reminders -->
+        <div class="reminders">
+            <div class="header">
+                <h2>Reminders</h2>
+                <span class="material-icons-sharp">notifications_none</span>
+            </div>
+
+            <div class="notification">
+                <div class="icon">
+                    <span class="material-icons-sharp">volume_up</span>
+                </div>
+                <div class="content">
+                    <div class="info">
+                        <h3>Reply to customer</h3>
+                        <small class="text-muted">Pending response</small>
+                    </div>
+                    <span class="material-icons-sharp">more_vert</span>
+                </div>
+            </div>
+
+            <div class="notification deactivate">
+                <div class="icon">
+                    <span class="material-icons-sharp">edit</span>
+                </div>
+                <div class="content">
+                    <div class="info">
+                        <h3>Follow up order</h3>
+                        <small class="text-muted">Tomorrow at 2 PM</small>
+                    </div>
+                    <span class="material-icons-sharp">more_vert</span>
+                </div>
+            </div>
+
+            <div class="notification add-reminder">
+                <div class="add-icon">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Reminder</h3>
+                </div>
+            </div>
+        </div>
+        <!-- End Reminders -->
+    </div>
+    <!-- End Right Section -->
+</div>
+<!-- End Container -->
+
+<!-- Message Page Script -->
+<script>
+// Sample message data
+const conversations = [
+    {
+        id: 1,
+        name: "Sarah Johnson",
+        avatar: "images/profile-2.png",
+        lastMessage: "Hi, I'd like to inquire about the shipping status of my order #12345",
+        time: "10:30 AM",
+        unread: true,
+        starred: false,
+        email: "sarah.j@example.com"
+    },
+    {
+        id: 2,
+        name: "Michael Chen",
+        avatar: "images/profile-3.png",
+        lastMessage: "Thank you for the quick response! The product arrived in perfect condition.",
+        time: "Yesterday",
+        unread: true,
+        starred: true,
+        email: "m.chen@example.com"
+    },
+    {
+        id: 3,
+        name: "Emily Rodriguez",
+        avatar: "images/profile-4.png",
+        lastMessage: "Is there a discount available for bulk purchases?",
+        time: "2 days ago",
+        unread: false,
+        starred: false,
+        email: "emily.r@example.com"
+    },
+    {
+        id: 4,
+        name: "David Kim",
+        avatar: "images/profile-1.png",
+        lastMessage: "I received the wrong item in my package. Can you help with this?",
+        time: "3 days ago",
+        unread: true,
+        starred: false,
+        email: "d.kim@example.com"
+    },
+    {
+        id: 5,
+        name: "Lisa Anderson",
+        avatar: "images/profile-2.png",
+        lastMessage: "Great customer service! Will definitely order again.",
+        time: "1 week ago",
+        unread: false,
+        starred: true,
+        email: "lisa.a@example.com"
+    }
+];
+
+// Current conversation
+let currentConversation = null;
+let currentFilter = 'all';
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    renderConversations();
+    updateUnreadCount();
+    
+    // Event listeners
+    document.getElementById('compose-btn').addEventListener('click', openComposeModal);
+    document.getElementById('close-compose').addEventListener('click', closeComposeModal);
+    document.getElementById('cancel-compose').addEventListener('click', closeComposeModal);
+    document.getElementById('compose-form').addEventListener('submit', sendMessage);
+    document.getElementById('search-input').addEventListener('input', searchMessages);
+    
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            renderConversations();
+        });
+    });
+});
+
+// Render conversations list
+function renderConversations(filteredConversations = null) {
+    const container = document.getElementById('conversations-list');
+    const conversationsToRender = filteredConversations || conversations;
+    
+    container.innerHTML = '';
+    
+    if (conversationsToRender.length === 0) {
+        container.innerHTML = '<div class="no-messages">No messages found</div>';
+        return;
+    }
+    
+    conversationsToRender.forEach(conv => {
+        const item = document.createElement('div');
+        item.className = `conversation-item ${conv.unread ? 'unread' : ''} ${conv.starred ? 'starred' : ''}`;
+        item.innerHTML = `
+            <img src="${conv.avatar}" alt="${conv.name}" class="conversation-avatar">
+            <div class="conversation-info">
+                <div class="conversation-header">
+                    <h4>${conv.name}</h4>
+                    <span class="conversation-time">${conv.time}</span>
+                </div>
+                <p class="conversation-preview">${conv.lastMessage}</p>
+            </div>
+            <div class="conversation-actions">
+                ${conv.starred ? '<span class="material-icons-sharp starred-icon">star</span>' : ''}
+                ${conv.unread ? '<span class="unread-indicator"></span>' : ''}
+            </div>
+        `;
+        
+        item.addEventListener('click', () => openConversation(conv));
+        container.appendChild(item);
+    });
+}
+
+// Open conversation
+function openConversation(conversation) {
+    currentConversation = conversation;
+    
+    // Mark as read
+    conversation.unread = false;
+    renderConversations();
+    updateUnreadCount();
+    
+    // Update message view
+    const messageView = document.getElementById('message-view');
+    messageView.innerHTML = `
+        <div class="message-header">
+            <div class="message-sender">
+                <img src="${conversation.avatar}" alt="${conversation.name}">
+                <div>
+                    <h3>${conversation.name}</h3>
+                    <p>${conversation.email}</p>
+                </div>
+            </div>
+            <div class="message-actions">
+                <button class="action-btn" onclick="toggleStar(${conversation.id})">
+                    <span class="material-icons-sharp">${conversation.starred ? 'star' : 'star_border'}</span>
+                </button>
+                <button class="action-btn" onclick="deleteConversation(${conversation.id})">
+                    <span class="material-icons-sharp">delete</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="message-content">
+            <div class="message-bubble received">
+                <p>${conversation.lastMessage}</p>
+                <span class="message-time">${conversation.time}</span>
+            </div>
+        </div>
+        
+        <div class="message-reply">
+            <div class="reply-input">
+                <input type="text" placeholder="Type your reply..." id="reply-input">
+                <button onclick="sendReply(${conversation.id})">
+                    <span class="material-icons-sharp">send</span>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// Search messages
+function searchMessages() {
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    
+    if (!searchTerm) {
+        renderConversations();
+        return;
+    }
+    
+    const filtered = conversations.filter(conv => 
+        conv.name.toLowerCase().includes(searchTerm) ||
+        conv.lastMessage.toLowerCase().includes(searchTerm) ||
+        conv.email.toLowerCase().includes(searchTerm)
+    );
+    
+    renderConversations(filtered);
+}
+
+// Toggle star
+function toggleStar(conversationId) {
+    const conv = conversations.find(c => c.id === conversationId);
+    if (conv) {
+        conv.starred = !conv.starred;
+        openConversation(conv);
+        renderConversations();
+    }
+}
+
+// Delete conversation
+function deleteConversation(conversationId) {
+    if (confirm('Are you sure you want to delete this conversation?')) {
+        const index = conversations.findIndex(c => c.id === conversationId);
+        if (index > -1) {
+            conversations.splice(index, 1);
+            renderConversations();
+            updateUnreadCount();
+            
+            // Reset message view
+            document.getElementById('message-view').innerHTML = `
+                <div class="empty-state">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>Select a conversation</h3>
+                    <p>Choose a message from the list to start reading</p>
+                </div>
+            `;
+        }
+    }
+}
+
+// Send reply
+function sendReply(conversationId) {
+    const replyInput = document.getElementById('reply-input');
+    const replyText = replyInput.value.trim();
+    
+    if (!replyText) return;
+    
+    // In a real app, this would send the reply to the server
+    alert(`Reply sent: "${replyText}"`);
+    replyInput.value = '';
+}
+
+// Update unread count
+function updateUnreadCount() {
+    const unreadCount = conversations.filter(c => c.unread).length;
+    document.getElementById('unread-count').textContent = unreadCount;
+}
+
+// Compose modal functions
+function openComposeModal() {
+    document.getElementById('compose-modal').style.display = 'flex';
+}
+
+function closeComposeModal() {
+    document.getElementById('compose-modal').style.display = 'none';
+    document.getElementById('compose-form').reset();
+}
+
+function sendMessage(e) {
+    e.preventDefault();
+    
+    const recipient = document.getElementById('recipient').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    
+    // In a real app, this would send the message to the server
+    alert(`Message sent to ${recipient}\nSubject: ${subject}\nMessage: ${message}`);
+    
+    closeComposeModal();
+}
+
+// Sidebar menu functionality
+const sideMenu = document.querySelector('aside');
+const menuBtn = document.getElementById('menu-btn');
+const closeBtn = document.getElementById('close-btn');
+
+menuBtn.addEventListener('click', () => {
+    sideMenu.style.display = 'block';
+});
+
+closeBtn.addEventListener('click', () => {
+    sideMenu.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
